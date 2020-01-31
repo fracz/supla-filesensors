@@ -26,7 +26,11 @@ and description should help.
 
 # Installation
 
-TODO
+```
+git clone
+cd supla-filesensors
+ln -s "bin/supla-filesensors-$(uname -s)-$(uname -m)" ./supla-filesensors
+```
 
 # Where are the sources?
 
