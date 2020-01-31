@@ -7,6 +7,10 @@ display them in the app, create direct links etc.
 If you can save a measurement in the file, this project will allow you to display it in 
 the SUPLA.
 
+If you want to use it, you can have your SUPLA account on official public `cloud.supla.org` service, 
+but you need some machine to run `supla-filesensors` for you. It may be anything running linux, 
+e.g. RaspberryPi or any Raspberry-like creation, VPS, your laptop etc.
+
 # Supported sensors
 
 * `TEMPERATURE` - sends a value from file as a temperature (channel type pretends to be a DS18B20 thermometer)
