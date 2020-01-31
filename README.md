@@ -26,7 +26,9 @@ If you want to see the sources or build them on your own, check out the
 
 ## Read measurements from Bluetooth devices
 
-### Xiaomi LYWSD03MMC
+### LYWSD03MMC
+
+![LYWSD03MMC image](https://raw.githubusercontent.com/fracz/supla-dev-files/master/img/LYWSD03MMC.jpg)
 
 Download `LYWSD03MMC.py` script from https://github.com/JsBergbau/MiTemperature2 and make it
 saving the readings to a file. Use this file to send values to the SUPLA pretending it is
