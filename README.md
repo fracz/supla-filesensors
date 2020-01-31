@@ -1,4 +1,4 @@
-# SUPLA-DEV-FILES
+# SUPLA-FILESENSORS
 
 This is a fork of [`supla-dev`](https://github.com/SUPLA/supla-core/tree/master/supla-dev)
 that is able to read measurement values from files and send them to the SUPLA, so you can
@@ -7,10 +7,18 @@ display them in the app, create direct links etc.
 If you can save a measurement in the file, this project will allow you to display it in 
 the SUPLA.
 
-Currently, it supports only a few channel types. In the nearest major release of SUPLA 
-it will support the 
-[general purpose measurement channel type](https://forum.supla.org/viewtopic.php?f=17&t=5225) 
-which will allow you to display any measurement in whatever format and unit.
+# Supported sensors
+
+* `TEMPERATURE` - sends a value from file as a temperature (channel type pretends to be a DS18B20 thermometer)
+* `TEMPERATURE_AND_HUMIDITY` - sends two values for a temperature and humidity (channel type: DHT-22)
+* `HUMIDITY` - sends a single value as a humidity (no corresponding hardware)
+* **SOMEDAY**: `GENERAL` - sends a single value to the [general purpose measurement channel type](https://forum.supla.org/viewtopic.php?f=17&t=5225) (to be released in the next upcoming SUPLA release)
+
+Do not be mistaken that it can send only temperature and humidity values. It can be anything (see examples below).
+However, while waiting for the general purpose measurement channel in SUPLA, we must pretend these values are
+either temperature or humidity although they can mean completely different thing to you. Setting appropriate icon 
+and description should help.
+
 
 # Installation
 
@@ -18,9 +26,9 @@ TODO
 
 # Where are the sources?
 
-This repository contains released `supla-dev-files` executables only. 
+This repository contains released `supla-filesensors` executables only. 
 If you want to see the sources or build them on your own, check out the 
-[`supla-dev-files` branch on mine `supla-core`'s fork](https://github.com/fracz/supla-core/tree/supla-dev-files/supla-dev).
+[`supla-filesensors` branch on mine `supla-core`'s fork](https://github.com/fracz/supla-core/tree/supla-filesensors/supla-dev).
 
 # What can I do?
 
@@ -65,7 +73,7 @@ If it works, add a `DHT22` channel configuration to the `supla.cfg`
 
 ```
 [CHANNEL_0]
-type=AM2302
+type=TEMPERATURE_AND_HUMIDITY
 file=/home/pi/mi-temp/sensor_mysensor.txt
 ```
 
