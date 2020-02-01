@@ -130,6 +130,8 @@ And explore!
 
 ### Airly
 
+![AIRLY image](https://raw.githubusercontent.com/fracz/supla-filesensors/master/img/airly.png)
+
 Airly publishes air quality and some weather conditions as a public API. You need to generate an API key
 and know the coordinations of where you live and you can fetch the data it publishes, save it in a file...
 And display in SUPLA :-)
@@ -153,11 +155,11 @@ Then add a `TEMPERATURE_AND_HUMIDITY` channel in `supla-filesensors.cfg` pointin
 
 How many commits SUPLA developers made in the last week? Are they working at all?
 
-Crontab:
-
 ```
 0 0 * * * curl -s 'https://api.github.com/repos/SUPLA/supla-cloud/stats/commit_activity' | jq '.[0].total' > /home/pi/supla-progress.txt
 ```
+
+![Github image](https://raw.githubusercontent.com/fracz/supla-filesensors/master/img/commits.png)
 
 ## Read measurements from Bluetooth devices
 
@@ -175,6 +177,7 @@ sudo hcitool lescan
 ### LYWSD03MMC
 
 ![LYWSD03MMC image](https://raw.githubusercontent.com/fracz/supla-dev-files/master/img/LYWSD03MMC.jpg)
+![LYWSD03MMC on SUPLA](https://raw.githubusercontent.com/fracz/supla-filesensors/master/img/LYWSD03MMC.png)
 
 Download `LYWSD03MMC.py` script from https://github.com/JsBergbau/MiTemperature2 and make it
 saving the readings to a file. Use this file to send values to the SUPLA pretending it is
@@ -225,6 +228,8 @@ user=pi
 ## Get anything you can measure
 
 ### Show how many storage is left on hard drive
+
+![Pi image](https://raw.githubusercontent.com/fracz/supla-filesensors/master/img/freesd.png)
 
 ```
 */30 * * * * df -h --total / | awk '{print $5}' | tail -n 1 > /home/pi/storage.txt
