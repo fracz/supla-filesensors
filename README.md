@@ -15,7 +15,7 @@ e.g. RaspberryPi or any Raspberry-like creation, VPS, your laptop etc.
 
 * `TEMPERATURE` - sends a value from file as a temperature (channel type pretends to be a DS18B20 thermometer)
 * `TEMPERATURE_AND_HUMIDITY` - sends two values for a temperature and humidity (channel type: DHT-22)
-* `HUMIDITY` - sends a single value as a humidity (no corresponding hardware)
+* **SOMEDAY**: `HUMIDITY` - sends a single value as a humidity (no corresponding hardware, but does not display any unit in the SUPLA app)
 * **SOMEDAY**: `GENERAL` - sends a single value to the [general purpose measurement channel type](https://forum.supla.org/viewtopic.php?f=17&t=5225) (to be released in the next upcoming SUPLA release)
 
 Do not be mistaken that it can send only temperature and humidity values. It can be anything (see examples below).
@@ -27,20 +27,107 @@ and description should help.
 # Installation
 
 ```
-git clone
+git clone https://github.com/fracz/supla-filesensors.git
 cd supla-filesensors
-ln -s "bin/supla-filesensors-$(uname -s)-$(uname -m)" ./supla-filesensors
+./configure.sh
 ```
+
+# Configuration
+
+There is a `supla-filesensors.cfg` file created for you after installation.
+In the `host`, `ID` and `PASSWORD` fields you should enter valid SUPLA-server
+hostname, identifier of a location and its password. After successful lauch of the
+`supla-filesensors` it will create a device in that location.
+
+Then you can put as many channels in this virtual device as you wish, 
+following the template:
+
+```
+[CHANNEL_X]
+type=TEMPERATURE
+file=/home/pi/supla-filesensors/var/raspberry_sdcard_free.txt
+min_interval_sec=300
+```
+
+* `CHANNEL_X` should be the next integer, starting from 0, e.g. `CHANNEL_0`, `CHANNEL_1`, ..., `CHANNEL_9`
+* `type` should be set to one of the supported values mentioned above (depending on the way of presentation you need)
+* `file` should point to an absolute path of the file that will contain the measurements
+* `min_interval` is a suggestion for the program of how often it should check for new measurements in the
+  file; it is optional with a default value of `10` (seconds); if the measurement does not change often, it's
+  good idea to set a bigger value not to stress your sd card with too many reads
+
+## What the file with a measurement should look like?
+
+It should just contain the value(s) to send to the SUPLA.
+
+So, for all channels that expect only one value (e.g. `TEMPERATURE`) it should be just number, e.g.
+
+```
+13.64
+```
+
+For the `TEMPERATURE_AND_HUMIDITY` which expects two values, put them in separate lines, e.g.:
+
+```
+88.23
+13.2918
+```
+
+That's it. Now, it's your job to fill these files with something interesting :-)
+
+# Lauching
+
+Execute the following command in the project directory:
+
+```
+./supla-filesensors
+```
+
+All parameters that works for [`supla-dev`](https://github.com/SUPLA/supla-core/tree/master/supla-dev)
+works here, too. So you can use `-c` to specify different config path or `-d` to start as a deamon.
+
+Do not forget to turn on the new devices registartion, and set appropriate function to the channel 
+in SUPLA Cloud.
+
+## Autostarting
+
+Autostart configuration is just the same as the [`supla-dev`](https://github.com/SUPLA/supla-core/blob/8afbd0a0ab9ad9ebf82b7c67d5ccea3618bf23cb/supla-dev/README.md#configure-autostart) instructions.
+It's good idea to configure it so `supla-filesensors` starts automatically after your machine boots.
 
 # Where are the sources?
 
-This repository contains released `supla-filesensors` executables only. 
+You might have noticed that this repository contains released `supla-filesensors` executables only. 
 If you want to see the sources or build them on your own, check out the 
 [`supla-filesensors` branch on mine `supla-core`'s fork](https://github.com/fracz/supla-core/tree/supla-filesensors/supla-dev).
 
 # What can I do?
 
+You need to find a way of putting meaningful numbers into the files mentioned in the
+channels configuration. Thay can come from anywhere and mean anything. It's totally up to you.
+
+I will post some examples here just to make you aware of what and how can be accomplished. But the
+main idea often boils down to one of these patterns:
+
+* get the value periodically at specific intervals; this involves executing your command that puts new
+  values in monitored values with [cron](https://en.wikipedia.org/wiki/Cron)
+* get the value continously with a process that is constantly run; such process should be configured
+  similarily to the [`supla-dev` or `supla-filesensors`](https://github.com/SUPLA/supla-core/blob/8afbd0a0ab9ad9ebf82b7c67d5ccea3618bf23cb/supla-dev/README.md#configure-autostart)
+  with `init.d` or `supervisor`; I will post `supervisor` configuration examples below
+
+So let's proceed with the examples!
+
 ## Read measurements from Bluetooth devices
+
+For this you need to have a Bluetooth module on the device you run this program (seems obvious right?).
+Raspberry Pi Zero W [is considered to have](https://github.com/JsBergbau/MiTemperature2/issues/3#issuecomment-577148741)
+very decent Bluetooth range.
+
+In order to get measurements from any Bluetooth sensor you need to find out it's MAC address.
+Therefore, it might be a good idea to start with finding it:
+
+```
+sudo hcitool lescan
+```
 
 ### LYWSD03MMC
 
@@ -62,12 +149,6 @@ echo 'echo $4 >> sensor_$2.txt' >> save-fo-file.sh
 chmod +x LYWSD03MMC.py save-fo-file.sh
 ```
 
-Now, detect the IP address of the sensor by executing:
-
-```
-sudo hcitool lescan
-```
-
 And then read its measurements:
 
 ```
@@ -75,15 +156,9 @@ And then read its measurements:
 ```
 
 The terminal should show you the measurements repeatedly. Stop it with <kbd>Ctrl</kbd>+<kbd>C</kbd>.
-Take a look at the `sensor_mysensor.txt` file. It should contain measurements last seen by the script.
+Take a look at the `sensor_mysensor.txt` file. It should contain measurements last seen by the script in two lines.
 
-If it works, add a `DHT22` channel configuration to the `supla.cfg`
-
-```
-[CHANNEL_0]
-type=TEMPERATURE_AND_HUMIDITY
-file=/home/pi/mi-temp/sensor_mysensor.txt
-```
+Add a `TEMPERATURE_AND_HUMIDITY` channel in `supla-filesensors.cfg` pointing at the resulting file.
 
 Last but not least, add the following configuration to the `supervisor` that will take care
 about running the reading script for you.
@@ -96,10 +171,6 @@ autostart=true
 autorestart=true
 user=pi
 ```
-
-Restart supervisor. It should restart `supla-dev-files` and start the script so you should see 
-measurements in the SUPLA app. Do not forget to turn on the new devices registartion, and set
-appropriate function to the channel in SUPLA Cloud.
 
 #### If you have more than one sensor
 
