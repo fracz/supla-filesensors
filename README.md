@@ -221,3 +221,16 @@ user=pi
 1. Change the `--name mysensor` to something different (e.g. `--name livingroom`)
 1. Add new channel in the `supla.cfg` pointing at the file with the measurement name (e.g. `/home/pi/mi-temp/sensor_livingroom.txt`)
 1. Restart supervisor.
+
+## Get anything you can measure
+
+### Show how many storage is left on hard drive
+
+```
+*/30 * * * * df -h --total / | awk '{print $5}' | tail -n 1 > /home/pi/storage.txt
+```
+
+# More ideas?
+
+I will be more than happy to accept pull requests with your ideas of what measurements we can
+integrate with SUPLA by using this simple tool.
