@@ -116,6 +116,49 @@ main idea often boils down to one of these patterns:
 
 So let's proceed with the examples!
 
+## Read some interesting APIs out there
+
+There are plenty of public APIs that offer some interesing data you might want to display and 
+use in SUPLA. They are often available in `JSON` format so you will need a [`jq`](https://stedolan.github.io/jq/)
+tool to read them. Go ahead and install it.
+
+```
+sudo apt-get install jq
+```
+
+And explore!
+
+### Airly
+
+Airly publishes air quality and some weather conditions as a public API. You need to generate an API key
+and know the coordinations of where you live and you can fetch the data it publishes, save it in a file...
+And display in SUPLA :-)
+
+See an example URL (it will not work because of invalid API Key):
+
+```
+https://airapi.airly.eu/v2/measurements/nearest?lat=51.038900&lng=19.13251&maxDistanceKM=10&apikey=CBKndj3UVtGpAGlmLFiAL4wLekYo
+```
+
+Change the coordinates and API Key to your data and see the output. You can easily consume it and save the
+PM10 and PM2.5 values in a file with the following crontab:
+
+```
+*/10 * * * * (AIRLY_DATA=$(curl -s 'https://airapi.airly.eu/v2/measurements/nearest?lat=51.038900&lng=19.13251&maxDistanceKM=10&apikey=CBKndj3UVtGpAGlmLFiAL4wLekYo') && echo $AIRLY_DATA | jq '.current.values[] | select(.name=="PM10") | .value' && echo $AIRLY_DATA | jq '.current.values[] | select(.name=="PM25") | .value') > /home/pi/airly.txt
+```
+
+Then add a `TEMPERATURE_AND_HUMIDITY` channel in `supla-filesensors.cfg` pointing at the `/home/pi/airly.txt`.
+
+### Github
+
+How many commits SUPLA developers made in the last week? Are they working at all?
+
+Crontab:
+
+```
+0 0 * * * curl -s 'https://api.github.com/repos/SUPLA/supla-cloud/stats/commit_activity' | jq '.[0].total' > /home/pi/supla-progress.txt
+```
+
 ## Read measurements from Bluetooth devices
 
 For this you need to have a Bluetooth module on the device you run this program (seems obvious right?).
