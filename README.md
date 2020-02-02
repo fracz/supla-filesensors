@@ -180,8 +180,9 @@ sudo hcitool lescan
 ![LYWSD03MMC image](https://raw.githubusercontent.com/fracz/supla-dev-files/master/img/LYWSD03MMC.jpg)
 ![LYWSD03MMC on SUPLA](https://raw.githubusercontent.com/fracz/supla-filesensors/master/img/LYWSD03MMC.png)
 
-Download `LYWSD03MMC.py` script from https://github.com/JsBergbau/MiTemperature2 and make it
-saving the readings to a file. Use this file to send values to the SUPLA pretending it is
+Download `LYWSD03MMC.py` script from https://github.com/JsBergbau/MiTemperature2 and 
+install all of its [prerequisites](https://github.com/JsBergbau/MiTemperature2#prequisites--requirements).
+Then use it to save the readings to a file. Use this file to send values to the SUPLA pretending it is
 a DHT-22 sensor.
 
 Example installation:
