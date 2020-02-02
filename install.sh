@@ -7,6 +7,8 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m'
 
+echo "Installing. Be patient."
+
 if [ ! -d src ]; then
   git clone https://github.com/fracz/supla-core.git -q --single-branch --branch supla-filesensors src >/dev/null
 fi
