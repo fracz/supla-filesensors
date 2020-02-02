@@ -7,13 +7,17 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m'
 
-echo "Installing. Be patient."
+echo "Getting the sources."
 
 if [ ! -d src ]; then
   git clone https://github.com/fracz/supla-core.git -q --single-branch --branch supla-filesensors src >/dev/null
 fi
 
-cd src/supla-dev/Release && git pull >/dev/null && make all >/dev/null && cd ../../..
+cd src && git pull
+
+echo "Building. Be patient."
+
+cd supla-dev/Release && make all >/dev/null && cd ../../..
 
 if [ ! -f supla-filesensors ]; then
   ln -s src/supla-dev/Release/supla-filesensors supla-filesensors

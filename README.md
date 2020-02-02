@@ -33,7 +33,7 @@ cd supla-filesensors
 ./install.sh
 ```
 
-## Upgrade
+### Upgrade
 
 ```
 cd supla-filesensors
