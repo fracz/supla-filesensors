@@ -27,9 +27,10 @@ and description should help.
 # Installation
 
 ```
+sudo apt-get install git libssl-dev
 git clone https://github.com/fracz/supla-filesensors.git
 cd supla-filesensors
-./configure.sh
+./install.sh
 ```
 
 # Configuration

@@ -7,20 +7,20 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m'
 
-ARCH_NAME="$(uname -s)-$(uname -m)"
-BIN_FILENAME="bin/supla-filesensors-${ARCH_NAME}"
-
-if [ ! -f $BIN_FILENAME ]; then
-  echo -e "${RED}Could not find binary for your system (${ARCH_NAME}).${NC}"
-  echo "Consider building it yourself from sources and sending me a Pull Request with it."
-  exit 1
-fi
-
-if [ ! -f supla-filesensors ]; then
+if [ ! -d src ]; then
+  git clone https://github.com/fracz/supla-core.git --single-branch --branch supla-filesensors src > /dev/null
   ln -s "$BIN_FILENAME" ./supla-filesensors
 fi
 
+cd src/supla-dev/Release && git pull >/dev/null && make all >/dev/null
+cd "$(dirname "$0")"
+
+if [ ! -f supla-filesensors ]; then
+  ln -s src/supla-dev/Release/supla-filesensors supla-filesensors
+fi
+
 echo -e "${GREEN}OK!${NC}"
+./supla-filesensors -v
 
 if [ ! -f supla-filesensors.cfg ]; then
   cp supla-filesensors.cfg.sample supla-filesensors.cfg
