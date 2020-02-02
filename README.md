@@ -33,6 +33,14 @@ cd supla-filesensors
 ./install.sh
 ```
 
+## Upgrade
+
+```
+cd supla-filesensors
+git pull
+./install.sh
+```
+
 # Configuration
 
 There is a `supla-filesensors.cfg` file created for you after installation.
