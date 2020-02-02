@@ -10,14 +10,14 @@ NC='\033[0m'
 echo "Getting the sources."
 
 if [ ! -d src ]; then
-  git clone https://github.com/fracz/supla-core.git -q --single-branch --branch supla-filesensors src >/dev/null
+  git clone https://github.com/fracz/supla-core.git -q --single-branch --branch supla-filesensors src >/dev/null || exit 1
 fi
 
-cd src && git pull
+(cd src && git pull >/dev/null && cd ..) || exit 1
 
 echo "Building. Be patient."
 
-cd supla-dev/Release && make all >/dev/null && cd ../../..
+(cd src/supla-dev/Release && make all >/dev/null && cd ../../..) || exit 1
 
 if [ ! -f supla-filesensors ]; then
   ln -s src/supla-dev/Release/supla-filesensors supla-filesensors
