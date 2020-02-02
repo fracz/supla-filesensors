@@ -27,7 +27,7 @@ and description should help.
 # Installation
 
 ```
-sudo apt-get install git libssl-dev
+sudo apt-get install git libssl-dev build-essential
 git clone https://github.com/fracz/supla-filesensors.git
 cd supla-filesensors
 ./install.sh

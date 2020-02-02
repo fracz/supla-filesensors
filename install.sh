@@ -12,8 +12,7 @@ if [ ! -d src ]; then
   ln -s "$BIN_FILENAME" ./supla-filesensors
 fi
 
-cd src/supla-dev/Release && git pull >/dev/null && make all >/dev/null
-cd "$(dirname "$0")"
+cd src/supla-dev/Release && git pull >/dev/null && make all >/dev/null && cd ../../..
 
 if [ ! -f supla-filesensors ]; then
   ln -s src/supla-dev/Release/supla-filesensors supla-filesensors
