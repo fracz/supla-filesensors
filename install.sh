@@ -8,8 +8,7 @@ YELLOW='\033[1;33m'
 NC='\033[0m'
 
 if [ ! -d src ]; then
-  git clone https://github.com/fracz/supla-core.git --single-branch --branch supla-filesensors src > /dev/null
-  ln -s "$BIN_FILENAME" ./supla-filesensors
+  git clone https://github.com/fracz/supla-core.git --single-branch --branch supla-filesensors src >/dev/null
 fi
 
 cd src/supla-dev/Release && git pull >/dev/null && make all >/dev/null && cd ../../..
