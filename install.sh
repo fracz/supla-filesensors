@@ -17,7 +17,7 @@ fi
 
 echo "Building. Be patient."
 
-(cd src/supla-dev/Release && make all >/dev/null && cd ../../..) || exit 1
+(cd src/supla-dev/Release && make all >/dev/null 2>&1 && cd ../../..) || exit 1
 
 if [ ! -f supla-filesensors ]; then
   ln -s src/supla-dev/Release/supla-filesensors supla-filesensors
