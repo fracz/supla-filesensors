@@ -162,6 +162,8 @@ Then add a `TEMPERATURE_AND_HUMIDITY` channel in `supla-filesensors.cfg` pointin
 
 ### Forecast
 
+![Forecast image](https://raw.githubusercontent.com/fracz/supla-filesensors/master/img/forecast.png)
+
 #### OpenWeatherMap
 
 It's quite easy to get forecast info with [OpenWeatherMap API](https://openweathermap.org/api).
