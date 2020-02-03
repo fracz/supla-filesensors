@@ -187,6 +187,33 @@ How many commits SUPLA developers made in the last week? Are they working at all
 
 ![Github image](https://raw.githubusercontent.com/fracz/supla-filesensors/master/img/commits.png)
 
+## Get measurements from HTML / XML pages
+
+In order to consume HTML/XML output nicely, it's good idea to use [CSS selectors](). Luckily, there is
+a [pup]() tool that offers CSS selectors in command line. Go to the [pup releases]()
+and download a binary suitable for your machine. It is also a good idea to move it to `/usr/bin`
+so it is globally available as `pup` command. They you are good to go with reading some
+HTML data!
+
+### Display PLN-EUR exchange rate
+
+Want to display exchange rate in SUPLA? For example I have found that it is available
+on [https://internetowykantor.pl/kurs-euro/](https://internetowykantor.pl/kurs-euro/).
+
+Looking at the HTML, the interesting part looks like this:
+
+```html
+<span class="kurs kurs_sprzedazy">4,2828</span>
+```
+
+So we can get this with pup and save it in a file for `supla-filesensors` every hour:
+
+```
+0 0 * * * curl -s 'https://internetowykantor.pl/kurs-euro/' | pup '.kurs_sprzedazy text{}' | sed 's/,/./' > /home/pi/exchange_rate.txt
+```
+
+Also notice how the `sed` is used to replace comma `,` to dot `.` so the SUPLA is not confused with the number format.
+
 ## Read measurements from Bluetooth devices
 
 For this you need to have a Bluetooth module on the device you run this program (seems obvious right?).
