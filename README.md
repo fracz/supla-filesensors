@@ -197,10 +197,10 @@ HTML data!
 
 ### Display PLN-EUR exchange rate
 
-Want to display exchange rate in SUPLA? For example I have found that it is available
+The exchange rate is for example available
 on [https://internetowykantor.pl/kurs-euro/](https://internetowykantor.pl/kurs-euro/).
 
-Looking at the HTML, the interesting part looks like this:
+Looking at the HTML, the interesting part is:
 
 ```html
 <span class="kurs kurs_sprzedazy">4,2828</span>
