@@ -190,7 +190,7 @@ How many commits SUPLA developers made in the last week? Are they working at all
 ## Get measurements from HTML / XML pages
 
 In order to consume HTML/XML output nicely, it's good idea to use [CSS selectors](). Luckily, there is
-a [pup]() tool that offers CSS selectors in command line. Go to the [pup releases]()
+a [pup](https://github.com/ericchiang/pup) tool that offers CSS selectors in command line. Go to the [pup releases](https://github.com/ericchiang/pup/releases)
 and download a binary suitable for your machine. It is also a good idea to move it to `/usr/bin`
 so it is globally available as `pup` command. They you are good to go with reading some
 HTML data!
