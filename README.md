@@ -160,6 +160,19 @@ PM10 and PM2.5 values in a file with the following crontab:
 
 Then add a `TEMPERATURE_AND_HUMIDITY` channel in `supla-filesensors.cfg` pointing at the `/home/pi/airly.txt`.
 
+### Forecast
+
+#### OpenWeatherMap
+
+It's quite easy to get forecast info with [OpenWeatherMap API](https://openweathermap.org/api).
+You need to sign in and get your APP ID, but then you are good to go and consume the API.
+For example, you can display the anticipated temperature that will be at your location
+in e.g. 6 hours with the [5 days forecast endpoint](https://openweathermap.org/forecast5).
+
+```
+0 0 * * * curl -s 'http://api.openweathermap.org/data/2.5/forecast?q=Paczków,pl&units=metric&appid=YOUR_API_KEY' | jq '.list[1].main.temp'
+```
+
 ### Github
 
 How many commits SUPLA developers made in the last week? Are they working at all?
