@@ -11,6 +11,8 @@ If you want to use it, you can have your SUPLA account on official public `cloud
 but you need some machine to run `supla-filesensors` for you. It may be anything running linux, 
 e.g. RaspberryPi or any Raspberry-like creation, VPS, your laptop etc.
 
+[![SUPLA Filesensors](https://img.youtube.com/vi/y1HHho2qSDE/0.jpg)](https://youtu.be/y1HHho2qSDE)
+
 # Supported sensors
 
 * `TEMPERATURE` - sends a value from file as a temperature (channel type pretends to be a DS18B20 thermometer)
