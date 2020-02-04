@@ -184,6 +184,32 @@ PM10 and PM2.5 values in a file with the following crontab:
 
 Then add a `TEMPERATURE_AND_HUMIDITY` channel in `supla-filesensors.cfg` pointing at the `/home/pi/airly.txt`.
 
+### Syngeos
+Syngeos like Airly, publish data on air quality, pressure etc.
+There is no need to generate an API key here.
+All you have to do is go to the page [Syngeos Map](https://panel.syngeos.pl/sensor/pm10) and select the sensor you are interested in.
+An example for Wojkowice: 
+
+```
+https://panel.syngeos.pl/sensor/pm10?device=187
+```
+
+Add the crontab below and change the final digit of the address (187) to the sensor of your choice
+
+```
+*/10 * * * * (SYNGEOS_DATA=$(curl -s 'https://api.syngeos.pl/api/public/data/device/187') && echo $SYNGEOS_DATA | jq '.sensors[4] | select(.name=="pm10") | .data[0].value' && echo $SYNGEOS_DATA | jq '.sensors[3] | select(.name=="pm2_5") | .data[0].value') > /home/pi/syngeos-air.txt
+```
+
+Then add a `TEMPERATURE_AND_HUMIDITY` channel in `supla-filesensors.cfg` pointing at the `/home/pi/syngeos-air.txt`.
+
+For atmospheric pressure, add
+
+```
+*/10 * * * * (SYNGEOS_DATA=$(curl -s 'https://api.syngeos.pl/api/public/data/device/187') && echo $SYNGEOS_DATA | jq '.sensors[2] | select(.name=="air_pressure") | .data[0].value') > /home/pi/syngeos-pressure.txt
+```
+
+Then add a `TEMPERATURE` channel in `supla-filesensors.cfg` pointing at the `/home/pi/syngeos-pressure.txt`.
+
 ### Forecast
 
 ![Forecast image](https://raw.githubusercontent.com/fracz/supla-filesensors/master/img/forecast.png)
