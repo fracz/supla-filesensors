@@ -102,8 +102,30 @@ in SUPLA Cloud.
 
 ## Autostarting
 
-Autostart configuration is just the same as the [`supla-dev`](https://github.com/SUPLA/supla-core/blob/8afbd0a0ab9ad9ebf82b7c67d5ccea3618bf23cb/supla-dev/README.md#configure-autostart) instructions.
+Autostart configuration is just the same as the [`supla-dev`](https://github.com/SUPLA/supla-core/tree/master/supla-dev#supervisor) instructions.
 It's good idea to configure it so `supla-filesensors` starts automatically after your machine boots.
+Execute the steps from the instructions there, but provide process configuration for the `supla-filesensors`:
+
+```
+[program:supla-filesensors]
+command=/home/pi/supla-filesensors/supla-filesensor
+directory=/home/pi/supla-filesensors
+autostart=true
+autorestart=true
+user=pi
+```
+
+### Start, stop, restart
+
+Just like for the [`supla-dev`](https://github.com/SUPLA/supla-core/tree/master/supla-dev#managing-the-process-with-supervisor)
+
+```
+supervisorctl status
+supervisorctl stop supla-filesensors
+supervisorctl start supla-filesensors
+supervisorctl restart supla-filesensors
+supervisorctl tail supla-filesensors
+```
 
 # Where are the sources?
 
@@ -213,7 +235,7 @@ Looking at the HTML, the interesting part is:
 <span class="kurs kurs_sprzedazy">4,2828</span>
 ```
 
-So we can get this with pup and save it in a file for `supla-filesensors` every hour:
+So we can get this with `pup` and save it in a file for `supla-filesensors` every hour:
 
 ```
 0 0 * * * curl -s 'https://internetowykantor.pl/kurs-euro/' | pup '.kurs_sprzedazy text{}' | sed 's/,/./' > /home/pi/exchange_rate.txt
