@@ -182,8 +182,6 @@ PM10 and PM2.5 values in a file with the following crontab:
 */10 * * * * (AIRLY_DATA=$(curl -s 'https://airapi.airly.eu/v2/measurements/nearest?lat=51.038900&lng=19.13251&maxDistanceKM=10&apikey=CBKndj3UVtGpAGlmLFiAL4wLekYo') && echo $AIRLY_DATA | jq '.current.values[] | select(.name=="PM10") | .value' && echo $AIRLY_DATA | jq '.current.values[] | select(.name=="PM25") | .value') > /home/pi/airly.txt
 ```
 
-Then add a `TEMPERATURE_AND_HUMIDITY` channel in `supla-filesensors.cfg` pointing at the `/home/pi/airly.txt`.
-
 ### Syngeos
 Syngeos like Airly, publish data on air quality, pressure etc.
 There is no need to generate an API key here.
@@ -200,15 +198,11 @@ Add the crontab below and change the final digit of the address (187) to the sen
 */10 * * * * (SYNGEOS_DATA=$(curl -s 'https://api.syngeos.pl/api/public/data/device/187') && echo $SYNGEOS_DATA | jq '.sensors[4] | select(.name=="pm10") | .data[0].value' && echo $SYNGEOS_DATA | jq '.sensors[3] | select(.name=="pm2_5") | .data[0].value') > /home/pi/syngeos-air.txt
 ```
 
-Then add a `TEMPERATURE_AND_HUMIDITY` channel in `supla-filesensors.cfg` pointing at the `/home/pi/syngeos-air.txt`.
-
-For atmospheric pressure, add
+For atmospheric pressure:
 
 ```
 */10 * * * * (SYNGEOS_DATA=$(curl -s 'https://api.syngeos.pl/api/public/data/device/187') && echo $SYNGEOS_DATA | jq '.sensors[2] | select(.name=="air_pressure") | .data[0].value') > /home/pi/syngeos-pressure.txt
 ```
-
-Then add a `TEMPERATURE` channel in `supla-filesensors.cfg` pointing at the `/home/pi/syngeos-pressure.txt`.
 
 ### Forecast
 
