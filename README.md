@@ -29,7 +29,7 @@ and description should help.
 # Installation
 
 ```
-sudo apt-get install -y git libssl-dev build-essential
+sudo apt-get install -y git libssl-dev build-essential curl
 git clone https://github.com/fracz/supla-filesensors.git
 cd supla-filesensors
 ./install.sh
