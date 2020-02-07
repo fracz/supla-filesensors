@@ -38,6 +38,8 @@ cd supla-filesensors
 
 ### Upgrade
 
+Stop `supla-filesensors` and execute:
+
 ```
 cd supla-filesensors
 git pull
