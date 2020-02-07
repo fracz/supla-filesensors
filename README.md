@@ -109,7 +109,7 @@ Execute the steps from the instructions there, but provide process configuration
 
 ```
 [program:supla-filesensors]
-command=/home/pi/supla-filesensors/supla-filesensor
+command=/home/pi/supla-filesensors/supla-filesensors
 directory=/home/pi/supla-filesensors
 autostart=true
 autorestart=true
