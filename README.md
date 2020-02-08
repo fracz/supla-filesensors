@@ -89,6 +89,19 @@ For the `TEMPERATURE_AND_HUMIDITY` which expects two values, put them in separat
 
 That's it. Now, it's your job to fill these files with something interesting :-)
 
+## Adding, removing and changing channels
+
+You can add channels to the `supla-filesensors.cfg`. After you restart the program, they will 
+be added to the device.
+
+However, you can neither remove channels nor change their types becuase SUPLA will refuse to accept
+such device with *Channels conflict* message. After such change, you need to stop `supla-filesensors`,
+remove the device from the SUPLA Cloud and then run it again. A new device with the new channels
+will be registered.
+
+This is a result of a design decision that SUPLA should never remove or change channels based on
+the data received from the device, as it might result in data loss caused by e.g. some device software bug.
+
 # Lauching
 
 Execute the following command in the project directory:
