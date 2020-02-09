@@ -17,6 +17,7 @@ e.g. RaspberryPi or any Raspberry-like creation, VPS, your laptop etc.
 
 * `TEMPERATURE` - sends a value from file as a temperature (channel type pretends to be a DS18B20 thermometer)
 * `TEMPERATURE_AND_HUMIDITY` - sends two values for a temperature and humidity (channel type: DHT-22)
+* `DISTANCESENSOR`, `PRESSURESENSOR`, `RAINSENSOR`, `WEIGHTSENSOR`, `WINDSENSOR` - send a value from file pretending to be the corresponding sensor
 * **SOMEDAY**: `HUMIDITY` - sends a single value as a humidity (no corresponding hardware, but does not display any unit in the SUPLA app)
 * **SOMEDAY**: `GENERAL` - sends a single value to the [general purpose measurement channel type](https://forum.supla.org/viewtopic.php?f=17&t=5225) (to be released in the next upcoming SUPLA release)
 
